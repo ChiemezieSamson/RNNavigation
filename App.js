@@ -1,18 +1,33 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AboutScreen from './screens/AboutScreen';
-import HomeScreen from './screens/HomeScreen copy';
+import { NavigationContainer } from "@react-navigation/native"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import CourseListscreen from "./screens/CourseListscreen"
+import ProfileScreen from "./screens/ProfileScreen"
+import SettingScreen from "./screens/SettingScreen"
+import Ionicons from "@expo/vector-icons/Ionicons"
+import { AboutStack } from "./AppStack"
 
-const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator()
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='About'>
-        <Stack.Screen name='Home' component={HomeScreen}/>
-        <Stack.Screen name='About' component={AboutScreen}/>
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{
+        tabBarLabelPosition: "beside-icon",
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: "purple",
+        tabBarInactiveTintColor: "pink"
+      }}>
+        <Tab.Screen name="Course List" component={CourseListscreen}/>
+        <Tab.Screen name="Profile" component={ProfileScreen} options={{
+          title: "My Profile",
+          tabBarIcon: ({color}) => (<Ionicons name="person" size={20} color={color}/>),
+          tabBarBadge: 3,
+        }}/>
+        <Tab.Screen name="Settings" component={SettingScreen}/>
+        <Tab.Screen name="About Stack" component={AboutStack} options={{headerShown: false}}/>
+      </Tab.Navigator>
     </NavigationContainer>
-  );
+  )
 }
+
+export default App

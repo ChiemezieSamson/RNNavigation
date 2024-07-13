@@ -1,10 +1,21 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useLayoutEffect } from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
 
-const AboutScreen = () => {
+const AboutScreen = ({navigation, route}) => {
+  const {name} = route.params
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: name
+    })
+  }, [navigation, name])
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>About Screen</Text>
+      <Text style={styles.text}>About {name}</Text>
+      <Button title='Go to Home' onPress={() => navigation.navigate("Home")} />
+      <Button title='Update the name' onPress={() => navigation.setParams({name: "Lisa"})} />
+      <Button title='Go back with data' onPress={() => navigation.navigate("Home", {result: "Data from about"})} />
     </View>
   )
 }
